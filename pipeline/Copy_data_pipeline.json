@@ -137,7 +137,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "SqlServerTable1",
+									"referenceName": "Input_SQLServer_Table",
 									"type": "DatasetReference"
 								}
 							],

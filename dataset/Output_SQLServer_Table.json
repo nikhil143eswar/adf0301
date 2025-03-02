@@ -1,5 +1,5 @@
 {
-	"name": "Input_SQLServer_Table",
+	"name": "Output_SQLServer_Table",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SqlServer1",
@@ -21,7 +21,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "tablename"
+			"table": "AdventureWorksDWBuildVersion"
 		}
 	}
 }
