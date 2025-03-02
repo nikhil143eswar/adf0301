@@ -61,7 +61,7 @@
 				"typeProperties": {
 					"variableName": "OutDimTables",
 					"value": {
-						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue",
+						"value": "@activity('Execute Pipeline1').output",
 						"type": "Expression"
 					}
 				}
@@ -85,7 +85,7 @@
 				"typeProperties": {
 					"variableName": "OutFactTables",
 					"value": {
-						"value": "@activity('Execute Pipeline2').output.pipelineReturnValue",
+						"value": "@activity('Execute Pipeline2').output",
 						"type": "Expression"
 					}
 				}
