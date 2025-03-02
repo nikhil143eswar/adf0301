@@ -230,8 +230,14 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "tablename"
+					"schema": {
+						"value": "@dataset().param_ds_SchemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().param_ds_TableName",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": [
