@@ -88,6 +88,41 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "param_array",
+							"value": {
+								"type": "Array",
+								"content": [
+									{
+										"type": "String",
+										"content": "@variables('TableArray')"
+									}
+								]
+							}
+						}
+					],
+					"setSystemVariable": true
+				}
 			}
 		],
 		"parameters": {
@@ -98,6 +133,9 @@
 			"param_tables": {
 				"type": "string",
 				"defaultValue": "Dim%"
+			},
+			"param_array": {
+				"type": "array"
 			}
 		},
 		"variables": {
