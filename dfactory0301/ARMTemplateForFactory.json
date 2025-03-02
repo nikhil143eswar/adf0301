@@ -61,7 +61,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/Copy_data_pipeline')]",
+			"name": "[concat(parameters('factoryName'), '/Collect_Table_Names')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -82,7 +82,7 @@
 							"source": {
 								"type": "SqlServerSource",
 								"sqlReaderQuery": {
-									"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nORDER BY TABLE_NAME\n",
+									"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nAND TABLE_NAME LIKE '@{pipeline().parameters.param_tables}'\nORDER BY TABLE_NAME",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -115,9 +115,83 @@
 							},
 							"activities": [
 								{
+									"name": "Append variable1",
+									"type": "AppendVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "TableNames",
+										"value": {
+											"value": "@item().TABLE_NAME",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "ForEach1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "TableArray",
+							"value": {
+								"value": "@variables('TableNames')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "ForEach2",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('TableArray')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Wait1",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 1
+									}
+								},
+								{
 									"name": "Copy data1",
 									"type": "Copy",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "Wait1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.12:00:00",
 										"retry": 0,
@@ -158,12 +232,9 @@
 											"referenceName": "Input_SQLServer_Table",
 											"type": "DatasetReference",
 											"parameters": {
-												"param_ds_SchemaName": {
-													"value": "@item().value.TABLE_SCHEMA",
-													"type": "Expression"
-												},
+												"param_ds_SchemaName": "dbo",
 												"param_ds_TableName": {
-													"value": "@item().value.TABLE_NAME",
+													"value": "@item().value",
 													"type": "Expression"
 												}
 											}
@@ -175,7 +246,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"FileName": {
-													"value": "@CONCAT(item().value.TABLE_NAME,'.csv')",
+													"value": "@item().value",
 													"type": "Expression"
 												}
 											}
@@ -193,10 +264,25 @@
 					"param_schema": {
 						"type": "string",
 						"defaultValue": "dbo"
+					},
+					"param_tables": {
+						"type": "string",
+						"defaultValue": "Dim%"
+					},
+					"param_array": {
+						"type": "array"
 					}
 				},
 				"variables": {
-					"TableName": {
+					"TableNames": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"TableArray": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"OneTableName": {
 						"type": "String"
 					}
 				},
@@ -206,6 +292,207 @@
 				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
 				"[concat(variables('factoryId'), '/datasets/Input_SQLServer_Table')]",
 				"[concat(variables('factoryId'), '/datasets/Output_folder')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Pipeline1",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Collect_Table_Names",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"param_schema": "dbo",
+								"param_tables": "Dim%"
+							}
+						}
+					},
+					{
+						"name": "Execute Pipeline2",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Collect_Table_Names",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"param_schema": "dbo",
+								"param_tables": "Fact%"
+							}
+						}
+					},
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "pl_return_value_string",
+							"value": {
+								"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.pl_return_value_string",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set variable2",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "pl_return_value_int",
+							"value": {
+								"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.pl_return_value_int",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set variable3",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "pl_return_value_array",
+							"value": {
+								"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.pl_return_value_array",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set variable4",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Execute Pipeline1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "OutDimTables",
+							"value": {
+								"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.param_array",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable4",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('OutDimTables')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Wait1",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 1
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"OutDimTables": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"OutFactTables": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"pl_return_value_string": {
+						"type": "String"
+					},
+					"pl_return_value_int": {
+						"type": "Integer"
+					},
+					"pl_return_value_array": {
+						"type": "Array"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Collect_Table_Names')]"
 			]
 		},
 		{
