@@ -115,7 +115,7 @@
 								"content": [
 									{
 										"type": "String",
-										"content": "@variables('TableArray')"
+										"content": "createArray(1,2,3)"
 									}
 								]
 							}
