@@ -85,7 +85,17 @@
 							"inputs": [
 								{
 									"referenceName": "Input_SQLServer_Table",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"param_ds_SchemaName": {
+											"value": "@item().value.TABLE_SCHEMA",
+											"type": "Expression"
+										},
+										"param_ds_TableName": {
+											"value": "@item().value.TABLE_NAME",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
