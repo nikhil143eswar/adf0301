@@ -113,6 +113,30 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set variable4",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "OutDimTables",
+					"value": {
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.TableArray",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
