@@ -88,6 +88,25 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "ForEach2",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('TableArray')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
