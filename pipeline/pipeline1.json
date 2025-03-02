@@ -59,9 +59,57 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "OutDimTables",
+					"variableName": "pl_return_value_string",
 					"value": {
-						"value": "@activity('Execute Pipeline1').param.TableArray",
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.pl_return_value_string",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pl_return_value_int",
+					"value": {
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.pl_return_value_int",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable3",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pl_return_value_array",
+					"value": {
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.pl_return_value_array",
 						"type": "Expression"
 					}
 				}
@@ -69,12 +117,21 @@
 		],
 		"variables": {
 			"OutDimTables": {
-				"type": "Array",
-				"defaultValue": []
+				"type": "String",
+				"defaultValue": "[]"
 			},
 			"OutFactTables": {
-				"type": "Array",
-				"defaultValue": []
+				"type": "String",
+				"defaultValue": "[]"
+			},
+			"pl_return_value_string": {
+				"type": "String"
+			},
+			"pl_return_value_int": {
+				"type": "Integer"
+			},
+			"pl_return_value_array": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
