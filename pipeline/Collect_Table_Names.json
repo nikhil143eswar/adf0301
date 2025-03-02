@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nAND TABLE_NAME like @CONCAT({pipeline().parameters.param_tables,'%')\nORDER BY TABLE_NAME\n",
+							"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nAND TABLE_NAME LIKE '@{concat(pipeline().parameters.param_tables, '%')}'\nORDER BY TABLE_NAME",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -95,7 +95,8 @@
 				"type": "string"
 			},
 			"param_tables": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "\"Dim\""
 			}
 		},
 		"variables": {
