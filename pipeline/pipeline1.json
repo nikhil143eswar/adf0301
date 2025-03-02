@@ -93,10 +93,12 @@
 		],
 		"variables": {
 			"OutDimTables": {
-				"type": "Array"
+				"type": "Array",
+				"defaultValue": []
 			},
 			"OutFactTables": {
-				"type": "Array"
+				"type": "Array",
+				"defaultValue": []
 			}
 		},
 		"annotations": []
