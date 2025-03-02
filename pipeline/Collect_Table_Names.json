@@ -82,22 +82,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "pipelineReturnValue",
-					"value": [
-						{
-							"key": "TableArray",
-							"value": {
-								"type": "Array",
-								"content": [
-									{
-										"type": "String",
-										"content": "@variables('TableNames')"
-									}
-								]
-							}
-						}
-					],
-					"setSystemVariable": true
+					"variableName": "TableArray",
+					"value": {
+						"value": "@variables('TableNames')",
+						"type": "Expression"
+					}
 				}
 			}
 		],
@@ -117,7 +106,8 @@
 				"defaultValue": []
 			},
 			"TableArray": {
-				"type": "Array"
+				"type": "Array",
+				"defaultValue": []
 			}
 		},
 		"annotations": []
