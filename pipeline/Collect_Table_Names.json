@@ -109,6 +109,18 @@
 									}
 								]
 							}
+						},
+						{
+							"key": "TableArray",
+							"value": {
+								"type": "Array",
+								"content": [
+									{
+										"type": "String",
+										"content": "@variables('TableNames')"
+									}
+								]
+							}
 						}
 					],
 					"setSystemVariable": true
