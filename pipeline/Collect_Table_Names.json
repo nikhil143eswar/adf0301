@@ -97,7 +97,7 @@
 			},
 			"param_tables": {
 				"type": "string",
-				"defaultValue": "\"Dim%\""
+				"defaultValue": "Dim%"
 			}
 		},
 		"variables": {
