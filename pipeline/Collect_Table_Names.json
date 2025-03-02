@@ -137,9 +137,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
 								},
 								"sink": {
 									"type": "ParquetSink",
@@ -162,15 +168,11 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "Input_SQLServer_Table",
+									"referenceName": "Output_folder",
 									"type": "DatasetReference",
 									"parameters": {
-										"param_ds_SchemaName": {
-											"value": "@pipeline().parameters.param_schema",
-											"type": "Expression"
-										},
-										"param_ds_TableName": {
-											"value": "@string(item())",
+										"FileName": {
+											"value": "@item()",
 											"type": "Expression"
 										}
 									}
