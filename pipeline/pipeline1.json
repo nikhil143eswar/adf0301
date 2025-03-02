@@ -43,6 +43,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"OutDimTableArray": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
