@@ -61,7 +61,7 @@
 				"typeProperties": {
 					"variableName": "OutDimTables",
 					"value": {
-						"value": "@activity('Execute Pipeline1').output.content",
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.content",
 						"type": "Expression"
 					}
 				}
