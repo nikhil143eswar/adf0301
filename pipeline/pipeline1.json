@@ -82,7 +82,18 @@
 					"items": {
 						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.TableArray.content",
 						"type": "Expression"
-					}
+					},
+					"activities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
 				}
 			}
 		],
