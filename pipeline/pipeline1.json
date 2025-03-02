@@ -60,8 +60,7 @@
 			"Type_Of_Tables": {
 				"type": "Array",
 				"defaultValue": [
-					"Dim",
-					"Fact"
+					"[Dim%,Fact%]"
 				]
 			}
 		},
