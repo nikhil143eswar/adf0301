@@ -82,11 +82,34 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "DimTableArray",
-					"value": {
-						"value": "@variables('DimTableNames')",
-						"type": "Expression"
-					}
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "OutputDimTableNames",
+							"value": {
+								"type": "Array",
+								"content": [
+									{
+										"type": "String",
+										"content": "@variables('DimTableNames')"
+									}
+								]
+							}
+						},
+						{
+							"key": "OutputFactTableNames",
+							"value": {
+								"type": "Array",
+								"content": [
+									{
+										"type": "String",
+										"content": "@variables('FactTableNames')"
+									}
+								]
+							}
+						}
+					],
+					"setSystemVariable": true
 				}
 			}
 		],
