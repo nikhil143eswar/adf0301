@@ -117,7 +117,7 @@
 								"content": [
 									{
 										"type": "String",
-										"content": "@variables('TableNames')"
+										"content": "TableNames"
 									}
 								]
 							}
