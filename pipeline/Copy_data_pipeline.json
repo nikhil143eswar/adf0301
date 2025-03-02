@@ -50,72 +50,41 @@
 					},
 					"activities": [
 						{
-							"name": "Copy data1",
-							"type": "Copy",
+							"name": "Append variable1",
+							"type": "AppendVariable",
 							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "TableNames",
+								"value": {
+									"value": "@item().TABLE_NAME",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Append variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
 								"secureOutput": false,
 								"secureInput": false
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
+								"variableName": "Output_array",
+								"value": {
+									"value": "@variables('TableNames')",
+									"type": "Expression"
 								}
-							},
-							"inputs": [
-								{
-									"referenceName": "Input_SQLServer_Table",
-									"type": "DatasetReference",
-									"parameters": {
-										"param_ds_SchemaName": {
-											"value": "@item().value.TABLE_SCHEMA",
-											"type": "Expression"
-										},
-										"param_ds_TableName": {
-											"value": "@item().value.TABLE_NAME",
-											"type": "Expression"
-										}
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "Output_folder",
-									"type": "DatasetReference",
-									"parameters": {
-										"FileName": {
-											"value": "@CONCAT(item().value.TABLE_NAME,'.csv')",
-											"type": "Expression"
-										}
-									}
-								}
-							]
+							}
 						}
 					]
 				}
@@ -128,8 +97,12 @@
 			}
 		},
 		"variables": {
-			"TableName": {
-				"type": "String"
+			"TableNames": {
+				"type": "Array",
+				"defaultValue": []
+			},
+			"Output_array": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
