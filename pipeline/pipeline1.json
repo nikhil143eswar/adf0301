@@ -3,65 +3,50 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach1",
-				"type": "ForEach",
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
 				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"items": {
-						"value": "@variables('Type_Of_Tables')",
-						"type": "Expression"
+					"pipeline": {
+						"referenceName": "Collect_Table_Names",
+						"type": "PipelineReference"
 					},
-					"isSequential": false,
-					"activities": [
-						{
-							"name": "Wait1",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
-							}
-						},
-						{
-							"name": "Execute Pipeline1",
-							"type": "ExecutePipeline",
-							"dependsOn": [
-								{
-									"activity": "Wait1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"pipeline": {
-									"referenceName": "Collect_Table_Names",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"param_tables": {
-										"value": "@item()",
-										"type": "Expression"
-									}
-								}
-							}
-						}
-					]
+					"waitOnCompletion": true,
+					"parameters": {
+						"param_schema": "dbo",
+						"param_tables": "Dim%"
+					}
+				}
+			},
+			{
+				"name": "Execute Pipeline2",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Collect_Table_Names",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"param_schema": "dbo",
+						"param_tables": "Fact%"
+					}
 				}
 			}
 		],
-		"variables": {
-			"Type_Of_Tables": {
-				"type": "Array",
-				"defaultValue": [
-					"[Dim%,Fact%]"
-				]
+		"parameters": {
+			"SchemaName": {
+				"type": "string",
+				"defaultValue": "dbo"
 			}
 		},
 		"annotations": []
