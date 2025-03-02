@@ -85,13 +85,27 @@
 					"variableName": "pipelineReturnValue",
 					"value": [
 						{
-							"key": "TableArray",
+							"key": "pl_return_value_string",
+							"value": {
+								"type": "String",
+								"content": "'Test_Return'"
+							}
+						},
+						{
+							"key": "pl_return_value_int",
+							"value": {
+								"type": "Int",
+								"content": 1
+							}
+						},
+						{
+							"key": "pl_return_value_array",
 							"value": {
 								"type": "Array",
 								"content": [
 									{
 										"type": "String",
-										"content": "@variables('TableNames')"
+										"content": "[1,2,3]"
 									}
 								]
 							}
