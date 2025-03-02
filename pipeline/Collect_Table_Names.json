@@ -165,7 +165,7 @@
 									"referenceName": "Input_SQLServer_Table",
 									"type": "DatasetReference",
 									"parameters": {
-										"param_ds_SchemaName": "dbo",
+										"param_ds_SchemaName": "param_schema",
 										"param_ds_TableName": {
 											"value": "@string(item())",
 											"type": "Expression"
