@@ -68,9 +68,15 @@
 									"partitionOption": "None"
 								},
 								"sink": {
-									"type": "SqlServerSink",
-									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
 								},
 								"enableStaging": false,
 								"translator": {
@@ -100,7 +106,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Output_SQLServer_Table",
+									"referenceName": "Output_folder",
 									"type": "DatasetReference"
 								}
 							]
