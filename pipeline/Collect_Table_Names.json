@@ -111,15 +111,10 @@
 							}
 						},
 						{
-							"key": "TableArray",
+							"key": "OneTableName",
 							"value": {
-								"type": "Array",
-								"content": [
-									{
-										"type": "String",
-										"content": "@variables('TableNames')"
-									}
-								]
+								"type": "String",
+								"content": "TableNames[0]"
 							}
 						}
 					],
@@ -145,6 +140,9 @@
 			"TableArray": {
 				"type": "Array",
 				"defaultValue": []
+			},
+			"OneTableName": {
+				"type": "String"
 			}
 		},
 		"annotations": []
