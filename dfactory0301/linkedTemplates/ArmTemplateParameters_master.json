@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dfactory0301"
+		},
+		"AzureDataLakeStorage2_servicePrincipalCredential": {
+			"value": ""
+		},
+		"AzureDataLakeStorage3_accountKey": {
+			"value": ""
+		},
+		"SqlServer1_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_sasUri": {
+			"value": ""
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://storageadb09.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_tenant": {
+			"value": "ce13290f-b8ed-4bdc-9207-81c4be6fdb5b"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_servicePrincipalId": {
+			"value": "d9bbd321-7f7e-42d1-a2a1-31d37e4626f4"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"value": "https://storageadb09.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://key0301.vault.azure.net/"
+		},
+		"SqlServer1_properties_typeProperties_server": {
+			"value": "192.168.80.128"
+		},
+		"SqlServer1_properties_typeProperties_database": {
+			"value": "AdventureWorksDW2022"
+		},
+		"SqlServer1_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
