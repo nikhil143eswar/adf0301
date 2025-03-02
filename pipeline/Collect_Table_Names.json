@@ -1,5 +1,5 @@
 {
-	"name": "Copy_data_pipeline",
+	"name": "Collect_Table_Names",
 	"properties": {
 		"activities": [
 			{
@@ -92,12 +92,10 @@
 		],
 		"parameters": {
 			"param_schema": {
-				"type": "string",
-				"defaultValue": "dbo"
+				"type": "string"
 			},
 			"param_tables": {
-				"type": "string",
-				"defaultValue": "Fact%"
+				"type": "string"
 			}
 		},
 		"variables": {
