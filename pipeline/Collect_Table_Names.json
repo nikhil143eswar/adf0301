@@ -55,7 +55,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "DimTableNames",
+								"variableName": "TableNames",
 								"value": {
 									"value": "@item().TABLE_NAME",
 									"type": "Expression"
@@ -85,25 +85,13 @@
 					"variableName": "pipelineReturnValue",
 					"value": [
 						{
-							"key": "OutputDimTableNames",
+							"key": "TableArray",
 							"value": {
 								"type": "Array",
 								"content": [
 									{
 										"type": "String",
-										"content": "@variables('DimTableNames')"
-									}
-								]
-							}
-						},
-						{
-							"key": "OutputFactTableNames",
-							"value": {
-								"type": "Array",
-								"content": [
-									{
-										"type": "String",
-										"content": "@variables('FactTableNames')"
+										"content": "@variables(\"TableNames\")"
 									}
 								]
 							}
@@ -124,18 +112,12 @@
 			}
 		},
 		"variables": {
-			"DimTableNames": {
+			"TableNames": {
 				"type": "Array",
 				"defaultValue": []
 			},
-			"DimTableArray": {
+			"TableArray": {
 				"type": "Array"
-			},
-			"FactTableNames": {
-				"type": "String"
-			},
-			"FactTableArray": {
-				"type": "String"
 			}
 		},
 		"annotations": []
