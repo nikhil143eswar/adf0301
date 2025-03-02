@@ -142,11 +142,20 @@
 					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().FileName",
+							"type": "Expression"
+						},
 						"folderPath": "csv",
 						"fileSystem": "raw"
 					},
@@ -352,9 +361,15 @@
 											"partitionOption": "None"
 										},
 										"sink": {
-											"type": "SqlServerSink",
-											"writeBehavior": "insert",
-											"sqlWriterUseTableLock": false
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
 										},
 										"enableStaging": false,
 										"translator": {
@@ -384,9 +399,14 @@
 									],
 									"outputs": [
 										{
-											"referenceName": "Output_SQLServer_Table",
+											"referenceName": "Output_folder",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"FileName": {
+													"value": "@CONCAT(item().value.TABLE_NAME,'.csv')",
+													"type": "Expression"
+												}
+											}
 										}
 									]
 								}
@@ -413,7 +433,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
 				"[concat(variables('factoryId'), '/datasets/Input_SQLServer_Table')]",
-				"[concat(variables('factoryId'), '/datasets/Output_SQLServer_Table')]"
+				"[concat(variables('factoryId'), '/datasets/Output_folder')]"
 			]
 		}
 	]
