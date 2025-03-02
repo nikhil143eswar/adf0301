@@ -167,7 +167,7 @@
 									"parameters": {
 										"param_ds_SchemaName": "dbo",
 										"param_ds_TableName": {
-											"value": "@item()",
+											"value": "@string(item())",
 											"type": "Expression"
 										}
 									}
@@ -179,7 +179,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"FileName": {
-											"value": "@item()",
+											"value": "@string(item())",
 											"type": "Expression"
 										}
 									}
