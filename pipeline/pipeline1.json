@@ -43,30 +43,6 @@
 				}
 			},
 			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "Execute Pipeline1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "OutDimTables",
-					"value": {
-						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.TableArray.content\n",
-						"type": "Expression"
-					}
-				}
-			},
-			{
 				"name": "Set variable2",
 				"type": "SetVariable",
 				"dependsOn": [
@@ -86,6 +62,25 @@
 					"variableName": "OutFactTables",
 					"value": {
 						"value": "@activity('Execute Pipeline2').output.pipelineReturnValue.TableArray.content\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.TableArray.content",
 						"type": "Expression"
 					}
 				}
