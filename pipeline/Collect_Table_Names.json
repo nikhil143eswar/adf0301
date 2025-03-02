@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nAND TABLE_NAME LIKE @{pipeline().parameters.param_tables}\nORDER BY TABLE_NAME",
+							"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nAND TABLE_NAME LIKE '@{pipeline().parameters.param_tables}'\nORDER BY TABLE_NAME",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
