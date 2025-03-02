@@ -103,7 +103,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@variables('TableArray')",
+						"value": "@activity('Lookup1').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -122,78 +122,6 @@
 							"dependsOn": [
 								{
 									"activity": "Wait1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "SqlServerSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "Input_SQLServer_Table",
-									"type": "DatasetReference",
-									"parameters": {
-										"param_ds_SchemaName": "dbo",
-										"param_ds_TableName": {
-											"value": "@item()",
-											"type": "Expression"
-										}
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "Output_folder",
-									"type": "DatasetReference",
-									"parameters": {
-										"FileName": {
-											"value": "@item()",
-											"type": "Expression"
-										}
-									}
-								}
-							]
-						},
-						{
-							"name": "Copy data2",
-							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Copy data1",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -239,7 +167,7 @@
 									"parameters": {
 										"param_ds_SchemaName": "dbo",
 										"param_ds_TableName": {
-											"value": "@item",
+											"value": "@item()",
 											"type": "Expression"
 										}
 									}
