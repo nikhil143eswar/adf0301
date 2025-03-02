@@ -93,10 +93,10 @@
 		],
 		"variables": {
 			"OutDimTables": {
-				"type": "String"
+				"type": "Array"
 			},
 			"OutFactTables": {
-				"type": "String"
+				"type": "Array"
 			}
 		},
 		"annotations": []
