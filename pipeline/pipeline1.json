@@ -12,6 +12,7 @@
 						"value": "@variables('Type_Of_Tables')",
 						"type": "Expression"
 					},
+					"isSequential": false,
 					"activities": [
 						{
 							"name": "Wait1",
@@ -45,7 +46,7 @@
 								"waitOnCompletion": true,
 								"parameters": {
 									"param_tables": {
-										"value": "@variables('Type_Of_Tables')",
+										"value": "@item()",
 										"type": "Expression"
 									}
 								}
