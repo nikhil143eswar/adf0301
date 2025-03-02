@@ -107,7 +107,13 @@
 							"outputs": [
 								{
 									"referenceName": "Output_folder",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@CONCAT(item().value.TABLE_NAME,'.csv')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
