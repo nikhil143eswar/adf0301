@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nAND TABLE_NAME like \"Dim%\"\nORDER BY TABLE_NAME\n",
+							"value": "SELECT TABLE_SCHEMA, TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_SCHEMA = '@{pipeline().parameters.param_schema}'\nAND TABLE_NAME like '@{pipeline().parameters.param_tables}'\nORDER BY TABLE_NAME\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -55,7 +55,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "TableNames",
+								"variableName": "DimTableNames",
 								"value": {
 									"value": "@item().TABLE_NAME",
 									"type": "Expression"
@@ -82,9 +82,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "Output_array",
+					"variableName": "DimTableArray",
 					"value": {
-						"value": "@variables('TableNames')",
+						"value": "@variables('DimTableNames')",
 						"type": "Expression"
 					}
 				}
@@ -94,15 +94,25 @@
 			"param_schema": {
 				"type": "string",
 				"defaultValue": "dbo"
+			},
+			"param_tables": {
+				"type": "string",
+				"defaultValue": "Fact%"
 			}
 		},
 		"variables": {
-			"TableNames": {
+			"DimTableNames": {
 				"type": "Array",
 				"defaultValue": []
 			},
-			"Output_array": {
+			"DimTableArray": {
 				"type": "Array"
+			},
+			"FactTableNames": {
+				"type": "String"
+			},
+			"FactTableArray": {
+				"type": "String"
 			}
 		},
 		"annotations": []
