@@ -141,8 +141,8 @@
 		],
 		"variables": {
 			"OutDimTables": {
-				"type": "Array",
-				"defaultValue": []
+				"type": "String",
+				"defaultValue": "[]"
 			},
 			"OutFactTables": {
 				"type": "Array",
