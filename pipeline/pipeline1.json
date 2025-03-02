@@ -133,7 +133,7 @@
 				"typeProperties": {
 					"variableName": "OutDimTables",
 					"value": {
-						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.TableArray[0]",
+						"value": "@activity('Execute Pipeline1').output.pipelineReturnValue.param_array",
 						"type": "Expression"
 					}
 				}
@@ -141,8 +141,8 @@
 		],
 		"variables": {
 			"OutDimTables": {
-				"type": "String",
-				"defaultValue": "[]"
+				"type": "Array",
+				"defaultValue": []
 			},
 			"OutFactTables": {
 				"type": "Array",
