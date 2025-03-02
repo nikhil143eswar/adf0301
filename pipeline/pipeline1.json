@@ -1,0 +1,74 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Collect_Table_Names",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"param_schema": "dbo",
+						"param_tables": "Dim%"
+					}
+				}
+			},
+			{
+				"name": "Execute Pipeline2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Collect_Table_Names",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"param_schema": "dbo",
+						"param_tables": "Fact%"
+					}
+				}
+			}
+		],
+		"variables": {
+			"OutDimTables": {
+				"type": "Array",
+				"defaultValue": []
+			},
+			"OutFactTables": {
+				"type": "Array",
+				"defaultValue": []
+			},
+			"pl_return_value_string": {
+				"type": "String"
+			},
+			"pl_return_value_int": {
+				"type": "Integer"
+			},
+			"pl_return_value_array": {
+				"type": "Array"
+			}
+		},
+		"annotations": []
+	}
+}

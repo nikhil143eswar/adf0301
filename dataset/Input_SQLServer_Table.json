@@ -1,0 +1,41 @@
+{
+	"name": "Input_SQLServer_Table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"param_ds_SchemaName": {
+				"type": "string"
+			},
+			"param_ds_TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "DBVersion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VersionDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().param_ds_SchemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().param_ds_TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
